@@ -10,15 +10,15 @@ import LearningLanguageSection from '../components/core/HomePage/LearningLanguag
 import InstructorSection from '../components/core/HomePage/InstructorSection';
 import ExploreMore from '../components/core/HomePage/ExploreMore';
 import Footer from '../components/common/Footer';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { logout } from '../services/operations/authAPI';
+// import { useDispatch } from 'react-redux';
+// import { useNavigate } from 'react-router-dom';
+// import { logout } from '../services/operations/authAPI';
 
 
 const Home = () => {
 
-    const dispatch = useDispatch() ;
-    const navigate = useNavigate() ;
+    // const dispatch = useDispatch() ;
+    // const navigate = useNavigate() ;
 
     return (
         <div>
@@ -27,20 +27,20 @@ const Home = () => {
             <div className='relative mx-auto flex flex-col w-11/12 max-w-maxContent items-center text-white'>
                 <div className='group mx-auto mt-16 w-fit rounded-full bg-richblack-800 p-1 font-bold text-richblack-200 
                     drop-shadow-[0_1.5px_rgba(255,255,255,0.25)] transition-all duration-200 hover:scale-95 hover:drop-shadow-none'>
-                    {/* <Link to={"/signup"}>
+                    <Link to={"/signup"}>
                         <div className='flex gap-3 items-center rounded-full px-10 py-[5px] transition-all duration-200 
                         group-hover:bg-richblack-900'>
                             <p>Become an Instructor</p>
                             <FaArrowRight />
                         </div>
-                    </Link> */}
-                    <button onClick={() => dispatch(logout(navigate))}>
+                    </Link>
+                    {/* <button onClick={() => dispatch(logout(navigate))}>
                         <div className='flex gap-3 items-center rounded-full px-10 py-[5px] transition-all duration-200 
                         group-hover:bg-richblack-900'>
                             <p>Become an Instructor</p>
                             <FaArrowRight />
                         </div>
-                    </button>
+                    </button> */}
                 </div>
                 <div className='text-center font-semibold text-4xl mt-7'>
                     Empower Your Future With
