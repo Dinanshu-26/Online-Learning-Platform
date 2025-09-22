@@ -8,6 +8,7 @@ import { ACCOUNT_TYPE } from '../../utils/constants';
 import { apiconnector } from '../../services/apisconnector';
 import { categories } from '../../services/apis';
 import { BsChevronDown } from 'react-icons/bs';
+import ProfileDropdown from '../core/Auth/ProfileDropDown';
 
 const Navbar = () => {
 
@@ -119,7 +120,7 @@ const Navbar = () => {
                     </ul>
                 </nav>
 
-                <div className="hidden items-center gap-x-4 md:flex">
+                <div className="hidden items-center gap-x-5 md:flex">
                     {user && user?.accountType !== ACCOUNT_TYPE.INSTRUCTOR && (
                         <Link to="/dashboard/cart" className="relative">
                             <AiOutlineShoppingCart className="text-2xl text-richblack-100" />
@@ -144,7 +145,7 @@ const Navbar = () => {
                             </button>
                         </Link>
                     )}
-                    {/* {token !== null && <ProfileDropdown />} */}
+                    {token !== null && <ProfileDropdown />}
                 </div>
                 <button className="mr-4 md:hidden">
                     <AiOutlineMenu fontSize={24} fill="#AFB2BF" />
