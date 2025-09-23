@@ -7,8 +7,10 @@ import IconBtn from "../../common/IconBtn"
 
 export default function MyProfile() {
     const { user } = useSelector((state) => state.profile)
+    const {token} = useSelector((state) => state.auth)
     const navigate = useNavigate()
     console.log(user)
+    console.log(token)
 
     return (
         <>

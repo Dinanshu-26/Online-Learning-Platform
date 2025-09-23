@@ -10,6 +10,7 @@ import LearningLanguageSection from '../components/core/HomePage/LearningLanguag
 import InstructorSection from '../components/core/HomePage/InstructorSection';
 import ExploreMore from '../components/core/HomePage/ExploreMore';
 import Footer from '../components/common/Footer';
+import { useSelector } from 'react-redux';
 // import { useDispatch } from 'react-redux';
 // import { useNavigate } from 'react-router-dom';
 // import { logout } from '../services/operations/authAPI';
@@ -19,6 +20,11 @@ const Home = () => {
 
     // const dispatch = useDispatch() ;
     // const navigate = useNavigate() ;
+
+    const {user} = useSelector((state) => state.profile)
+    console.log(user)
+    const {token} = useSelector((state) => state.auth)
+    console.log(token)
 
     return (
         <div>
