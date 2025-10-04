@@ -40,8 +40,8 @@ const Navbar = () => {
             setLoading(true)
             try {
                 const res = await apiconnector("GET", categories.CATEGORIES_API)
-                console.log("Categories result: ", res)
-                console.log("SubLinks result: ", res.data.data)
+                // console.log("Categories result: ", res)
+                // console.log("SubLinks result: ", res.data.data)
                 setSubLinks(res.data.data)
             } catch (error) {
                 console.log("Could not fetch Categories.", error)

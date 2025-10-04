@@ -21,10 +21,10 @@ const Home = () => {
     // const dispatch = useDispatch() ;
     // const navigate = useNavigate() ;
 
-    const {user} = useSelector((state) => state.profile)
-    console.log(user)
-    const {token} = useSelector((state) => state.auth)
-    console.log(token)
+    // const {user} = useSelector((state) => state.profile)
+    // console.log(user)
+    // const {token} = useSelector((state) => state.auth)
+    // console.log(token)
 
     return (
         <div>

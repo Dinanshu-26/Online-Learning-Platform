@@ -30,7 +30,7 @@ const PrivateRoute = ({ children }) => {
     if (token) {
         try {
             const decoded = jwtDecode(token)
-            console.log(decoded)
+            // console.log(decoded)
             if (decoded.exp * 1000 < Date.now()) {
                 dispatch(logout(navigate))   
                 return null                  

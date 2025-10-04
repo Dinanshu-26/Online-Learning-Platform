@@ -13,6 +13,7 @@ import Contact from "./pages/Contact";
 import PrivateRoute from "./components/core/Auth/PrivateRoute";
 import Dashboard from "./pages/Dashboard";
 import MyProfile from "./components/core/Dashboard/MyProfile";
+import Settings from "./components/core/Dashboard/Settings";
 
 function App() {
   return (
@@ -80,6 +81,7 @@ function App() {
           }
         >
           <Route path="my-profile" element={<MyProfile />} />
+          <Route path="Settings" element={<Settings />} />
           {/* Later you can add more dashboard pages here */}
           {/* <Route path="settings" element={<Settings />} /> */}
         </Route>
