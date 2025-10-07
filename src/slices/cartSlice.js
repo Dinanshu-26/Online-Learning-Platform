@@ -31,11 +31,11 @@ const cartSlice = createSlice({
             // Update the total quantity and price
             state.totalItems++
             state.total += course.price
-            // Update to localstorage
+
             localStorage.setItem("cart", JSON.stringify(state.cart))
             localStorage.setItem("total", JSON.stringify(state.total))
             localStorage.setItem("totalItems", JSON.stringify(state.totalItems))
-            // show toast
+            
             toast.success("Course added to cart")
         },
         removeFromCart: (state, action) => {
