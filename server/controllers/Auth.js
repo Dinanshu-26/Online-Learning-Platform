@@ -5,11 +5,14 @@ const otpGenerator = require("otp-generator");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const mailSender = require("../utils/mailSender");
-const {passwordUpdated} = require("../mail/templates/passwordUpdate");
+const { passwordUpdated } = require("../mail/templates/passwordUpdate");
+const otpTemplate = require("../mail/templates/emailVerificationTemplate")
 require("dotenv").config();
+
 
 //send OTP
 exports.sendotp = async (req, res) => {
+    console.log("OTP API HIT", req.body);
     try {
         const { email } = req.body;
 
@@ -49,6 +52,12 @@ exports.sendotp = async (req, res) => {
         //     "Your OTP Code",
         //     `<h1>Your OTP is: ${otp}</h1><p>This OTP will expire in 5 minutes.</p>`
         // );
+
+        await mailSender(
+            email,
+            "Verification Email",
+            otpTemplate(otp)
+        );
 
         return res.status(200).json({
             success: true,

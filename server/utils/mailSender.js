@@ -1,4 +1,5 @@
 const nodemailer = require("nodemailer");
+require("dotenv").config() ;
 
 // const mailSender = async (email, title, body) => {
 //     try {
@@ -23,37 +24,64 @@ const nodemailer = require("nodemailer");
 //     }
 // }
 
+// const mailSender = async (email, title, body) => {
+//     try {
+
+//         console.log("📨 Creating transporter with:");
+//         console.log("HOST:", process.env.MAIL_HOST);
+//         console.log("USER:", process.env.MAIL_USER);
+
+//         let transporter = nodemailer.createTransport({
+//             host: process.env.MAIL_HOST,
+//             auth: {
+//                 user: process.env.MAIL_USER,
+//                 pass: process.env.MAIL_PASS,
+//             },
+//         });
+
+//         console.log("✅ Transporter created. Sending mail...");
+
+//         let info = await transporter.sendMail({
+//             from: `StudyNotion || CodeHelp - by Dino <${process.env.MAIL_USER}>`,
+//             to: email,
+//             subject: title,
+//             html: body,
+//         });
+
+//         console.log("📧 Mail sent successfully!");
+//         console.log("MessageId:", info.messageId);
+//         console.log("Preview URL (if using ethereal):", nodemailer.getTestMessageUrl(info));
+
+//         return info;
+//     } catch (error) {
+//         console.error("❌ Error sending mail:", error.message);
+//         throw error;
+//     }
+// };
+
+// module.exports = mailSender;
+
+// mailSender.js
+const { Resend } = require("resend");
+
+const resend = new Resend(process.env.RESEND_API_KEY);
+
 const mailSender = async (email, title, body) => {
     try {
-        // Log transport config (mask password for safety)
-        console.log("📨 Creating transporter with:");
-        console.log("HOST:", process.env.MAIL_HOST);
-        console.log("USER:", process.env.MAIL_USER);
+        console.log("📨 Sending email using Resend to:", email);
 
-        let transporter = nodemailer.createTransport({
-            host: process.env.MAIL_HOST,
-            auth: {
-                user: process.env.MAIL_USER,
-                pass: process.env.MAIL_PASS,
-            },
-        });
-
-        console.log("✅ Transporter created. Sending mail...");
-
-        let info = await transporter.sendMail({
-            from: `StudyNotion || CodeHelp - by Dino <${process.env.MAIL_USER}>`,
+        const data = await resend.emails.send({
+            from: "StudyNotion <onboarding@resend.dev>",
             to: email,
             subject: title,
             html: body,
         });
 
-        console.log("📧 Mail sent successfully!");
-        console.log("MessageId:", info.messageId);
-        console.log("Preview URL (if using ethereal):", nodemailer.getTestMessageUrl(info));
+        console.log("📧 Email sent successfully. ID:", data.id);
+        return data;
 
-        return info;
     } catch (error) {
-        console.error("❌ Error sending mail:", error.message);
+        console.error("❌ Error sending email:", error);
         throw error;
     }
 };
