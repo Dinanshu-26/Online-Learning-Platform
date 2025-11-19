@@ -87,40 +87,75 @@ require("dotenv").config();
 // };
 
 // mailSender.js
+// const nodemailer = require("nodemailer");
+// require("dotenv").config();
+
+// const mailSender = async (email, title, body) => {
+//     try {
+//         console.log("📨 Sending Gmail MAIL email to:", email);
+
+//         const transporter = nodemailer.createTransport({
+//             host: process.env.MAIL_HOST,       
+//             port: 587,      
+//             secure: false,                     
+//             auth: {
+//                 user: process.env.MAIL_USER,    
+//                 pass: process.env.MAIL_PASS,     
+//             },
+//         });
+
+//         const mailOptions = {
+//             from: `StudyNotion <${process.env.MAIL_USER}>`,
+//             to: email,
+//             subject: title,
+//             html: body,
+//         };
+
+//         const info = await transporter.sendMail(mailOptions);
+
+//         console.log("📧 Mail sent:", info.messageId);
+//         return info;
+
+//     } catch (error) {
+//         console.error("❌ Email send error:", error);
+//         throw error;
+//     }
+// };
+
+// mailSender.js
 const nodemailer = require("nodemailer");
 require("dotenv").config();
 
 const mailSender = async (email, title, body) => {
-    try {
-        console.log("📨 Sending Gmail SMTP email to:", email);
+  try {
+    console.log("📨 Sending email using Brevo MAIL to:", email);
 
-        const transporter = nodemailer.createTransport({
-            host: process.env.MAIL_HOST,       
-            port: 587,      
-            secure: false,                     
-            auth: {
-                user: process.env.MAIL_USER,    
-                pass: process.env.MAIL_PASS,     
-            },
-        });
+    const transporter = nodemailer.createTransport({
+      host: process.env.MAIL_HOST,       // MAIL-relay.brevo.com
+      port: process.env.MAIL_PORT,       // 587
+      secure: false,                     // Brevo uses TLS on 587
+      auth: {
+        user: process.env.MAIL_USER,     // Your Brevo login email
+        pass: process.env.MAIL_PASS,     // Your Brevo MAIL key
+      },
+    });
 
-        const mailOptions = {
-            from: `StudyNotion <${process.env.MAIL_USER}>`,
-            to: email,
-            subject: title,
-            html: body,
-        };
+    const mailOptions = {
+      from: `StudyNotion <${process.env.MAIL_USER}>`,
+      to: email,
+      subject: title,
+      html: body,
+    };
 
-        const info = await transporter.sendMail(mailOptions);
+    const info = await transporter.sendMail(mailOptions);
 
-        console.log("📧 Mail sent:", info.messageId);
-        return info;
+    console.log("📧 Email sent successfully:", info.messageId);
+    return info;
 
-    } catch (error) {
-        console.error("❌ Email send error:", error);
-        throw error;
-    }
+  } catch (error) {
+    console.error("❌ Email send error:", error);
+    throw error;
+  }
 };
-
 
 module.exports = mailSender;
