@@ -77,7 +77,6 @@ async function sendVerificationEmail(email, otp) {
 otpSchema.pre("save", async function (next) {
     console.log("🟦 OTP document ready to save");
 
-    // Send email only when a new OTP document is created
     if (this.isNew) {
         await sendVerificationEmail(this.email, this.otp);
     }

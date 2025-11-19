@@ -1,5 +1,5 @@
 const nodemailer = require("nodemailer");
-require("dotenv").config() ;
+require("dotenv").config();
 
 // const mailSender = async (email, title, body) => {
 //     try {
@@ -62,28 +62,65 @@ require("dotenv").config() ;
 // module.exports = mailSender;
 
 // mailSender.js
-const { Resend } = require("resend");
+// const { Resend } = require("resend");
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// const resend = new Resend(process.env.RESEND_API_KEY);
+
+// const mailSender = async (email, title, body) => {
+//     try {
+//         console.log("📨 Sending email using Resend to:", email);
+
+//         const data = await resend.emails.send({
+//             from: "StudyNotion <studynotion@resend.dev>",
+//             to: email,
+//             subject: title,
+//             html: body,
+//         });
+
+//         console.log("📧 Email sent successfully. ID:", data.id);
+//         return data;
+
+//     } catch (error) {
+//         console.error("❌ Error sending email:", error);
+//         throw error;
+//     }
+// };
+
+// mailSender.js
+const nodemailer = require("nodemailer");
+require("dotenv").config();
 
 const mailSender = async (email, title, body) => {
     try {
-        console.log("📨 Sending email using Resend to:", email);
+        console.log("📨 Sending Gmail SMTP email to:", email);
 
-        const data = await resend.emails.send({
-            from: "StudyNotion <studynotion@resend.dev>",
+        const transporter = nodemailer.createTransport({
+            host: process.env.MAIL_HOST,       
+            port: 587,      
+            secure: false,                     
+            auth: {
+                user: process.env.MAIL_USER,    
+                pass: process.env.MAIL_PASS,     
+            },
+        });
+
+        const mailOptions = {
+            from: `StudyNotion <${process.env.MAIL_USER}>`,
             to: email,
             subject: title,
             html: body,
-        });
+        };
 
-        console.log("📧 Email sent successfully. ID:", data.id);
-        return data;
+        const info = await transporter.sendMail(mailOptions);
+
+        console.log("📧 Mail sent:", info.messageId);
+        return info;
 
     } catch (error) {
-        console.error("❌ Error sending email:", error);
+        console.error("❌ Email send error:", error);
         throw error;
     }
 };
+
 
 module.exports = mailSender;
