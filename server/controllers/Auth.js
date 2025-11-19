@@ -53,11 +53,17 @@ exports.sendotp = async (req, res) => {
         //     `<h1>Your OTP is: ${otp}</h1><p>This OTP will expire in 5 minutes.</p>`
         // );
 
-        await mailSender(
-            email,
-            "Verification Email",
-            otpTemplate(otp)
-        );
+        // await mailSender(
+        //     email,
+        //     "Verification Email",
+        //     otpTemplate(otp)
+        // );
+
+        // await mailSender(
+        //     email,
+        //     "Verification Email",
+        //     otpTemplate(otp)
+        // )
 
         return res.status(200).json({
             success: true,

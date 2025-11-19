@@ -34,7 +34,7 @@ const otpSchema = new mongoose.Schema({
 // }) ;
 
 // async function sendVerificationEmail(email, otp) {
-    
+
 //     try {
 //         const mailResponse = await mailSender(
 //             email,
@@ -56,5 +56,33 @@ const otpSchema = new mongoose.Schema({
 //     }
 //     next();
 // });
+
+async function sendVerificationEmail(email, otp) {
+    try {
+        console.log("📨 Sending verification email...");
+
+        const response = await mailSender(
+            email,
+            "Verification Email",
+            emailTemplate(otp)
+        );
+
+        console.log("📧 Email sent successfully:", response?.id || response);
+    } catch (error) {
+        console.error("❌ Could not send verification email:", error);
+        throw error;
+    }
+}
+
+otpSchema.pre("save", async function (next) {
+    console.log("🟦 OTP document ready to save");
+
+    // Send email only when a new OTP document is created
+    if (this.isNew) {
+        await sendVerificationEmail(this.email, this.otp);
+    }
+
+    next();
+});
 
 module.exports = mongoose.model("OTP", otpSchema);
