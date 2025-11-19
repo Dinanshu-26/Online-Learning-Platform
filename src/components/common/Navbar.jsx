@@ -37,6 +37,8 @@ const Navbar = () => {
 
     useEffect(() => {
         ; (async () => {
+            console.log("Categories_API: ", categories.CATEGORIES_API)
+
             setLoading(true)
             try {
                 const res = await apiconnector("GET", categories.CATEGORIES_API)
