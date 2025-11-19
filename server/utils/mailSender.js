@@ -71,7 +71,7 @@ const mailSender = async (email, title, body) => {
         console.log("📨 Sending email using Resend to:", email);
 
         const data = await resend.emails.send({
-            from: "StudyNotion <onboarding@resend.dev>",
+            from: "StudyNotion <studynotion@resend.dev>",
             to: email,
             subject: title,
             html: body,
