@@ -23,6 +23,8 @@ import AddCourse from "./components/core/Dashboard/AddCourse";
 import MyCourses from "./components/core/Dashboard/MyCourses";
 import Catalog from "./pages/Catalog";
 import CourseDetails from "./pages/CourseDetails";
+import ViewCourse from "./pages/ViewCourse";
+import VideoDetails from "./components/core/ViewCourse/VideoDetails";
 
 function App() {
 
@@ -86,7 +88,7 @@ function App() {
 
         <Route path="/catalog/:catalogName" element={<Catalog />} />
 
-        <Route path="courses/:courseId" element={<CourseDetails/>} />
+        <Route path="courses/:courseId" element={<CourseDetails />} />
 
         <Route
           path="dashboard"
@@ -119,7 +121,27 @@ function App() {
             )
           }
           {/* Later you can add more dashboard pages here */}
+
           {/* <Route path="settings" element={<Settings />} /> */}
+        </Route>
+        
+        <Route element={
+          <PrivateRoute>
+            <ViewCourse />
+          </PrivateRoute>
+        }>
+
+          {
+            user?.accountType === ACCOUNT_TYPE.STUDENT && (
+              <>
+                <Route
+                  path="view-course/:courseId/section/:sectionId/sub-section/:subSectionId"
+                  element={<VideoDetails />}
+                />
+              </>
+            )
+          }
+
         </Route>
       </Routes>
     </div>

@@ -182,6 +182,78 @@ const enrollStudents = async (courses, userId, res) => {
   }
 }
 
+exports.enrollStudent = async (req, res) => {
+  try {
+    const { courses } = req.body;
+    const userId = req.user.id; // from auth middleware
+
+    if (!courses || !userId) {
+      return res.status(400).json({
+        success: false,
+        message: "Please provide course IDs",
+      });
+    }
+
+    for (const courseId of courses) {
+      // 1. Add student to course
+      const enrolledCourse = await Course.findByIdAndUpdate(
+        courseId,
+        { $push: { studentsEnrolled: userId } },
+        { new: true }
+      );
+
+      if (!enrolledCourse) {
+        return res.status(404).json({
+          success: false,
+          message: "Course not found: " + courseId,
+        });
+      }
+
+      // 2. Create course progress
+      const courseProgress = await CourseProgress.create({
+        courseID: courseId,
+        userId: userId,
+        completedVideos: [],
+      });
+
+      // 3. Update user
+      const enrolledStudent = await User.findByIdAndUpdate(
+        userId,
+        {
+          $push: {
+            courses: courseId,
+            courseProgress: courseProgress._id,
+          },
+        },
+        { new: true }
+      );
+
+      // 4. Send email
+      await mailSender(
+        enrolledStudent.email,
+        `Successfully Enrolled into ${enrolledCourse.courseName}`,
+        courseEnrollmentEmail(
+          enrolledCourse.courseName,
+          `${enrolledStudent.firstName} ${enrolledStudent.lastName}`
+        )
+      );
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Student enrolled successfully",
+    });
+  } catch (error) {
+    console.log("Enrollment error:", error.message);
+
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+
 exports.sendPaymentSuccessEmail = async (req, res) => {
   const { orderId, paymentId, amount } = req.body
 

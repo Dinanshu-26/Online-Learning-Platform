@@ -6,7 +6,22 @@ import { setPaymentLoading } from "../../slices/courseSlice";
 import { resetCart } from "../../slices/cartSlice";
 
 
-const { COURSE_PAYMENT_API, COURSE_VERIFY_API, SEND_PAYMENT_SUCCESS_EMAIL_API } = studentEndpoints;
+const { COURSE_PAYMENT_API, COURSE_VERIFY_API, SEND_PAYMENT_SUCCESS_EMAIL_API, ENROLL_STUDENT_API } = studentEndpoints;
+
+export async function testEnrollStudent(token, courses) {
+    const toastId = toast.loading("Loading...");
+    try {
+        await apiconnector("POST",ENROLL_STUDENT_API,
+            {courses},
+            {
+                Authorization : `Bearer ${token}`
+            },
+        )
+    } catch (error) {
+        console.log("Enrolling Student without payment error: ",error) ;
+    }
+    toast.dismiss(toastId) ;
+}
 
 function loadScript(src) {
     return new Promise((resolve) => {
