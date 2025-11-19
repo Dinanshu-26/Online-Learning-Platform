@@ -8,4 +8,4 @@ const Error = () => {
   )
 }
 
-export default ErrorF
+export default Error;

@@ -48,3 +48,13 @@ export const courseEndpoints = {
     LECTURE_COMPLETION_API: BASE_URL + "/course/updateCourseProgress",
     CREATE_RATING_API: BASE_URL + "/course/createRating",
 }
+
+export const catalogData = {
+    CATALOGPAGEDATA_API: BASE_URL + "/course/getCategoryPageDetails",
+}
+
+export const studentEndpoints = {
+    COURSE_PAYMENT_API: BASE_URL + "/payment/capturePayment",
+    COURSE_VERIFY_API: BASE_URL + "/payment/verifyPayment",
+    SEND_PAYMENT_SUCCESS_EMAIL_API: BASE_URL + "/payment/sendPaymentSuccessEmail",
+}
